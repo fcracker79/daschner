@@ -14,7 +14,7 @@ public class User {
     public User() {}
 
     @NotNull
-    @FirstCapString
+    @FirstCapString(message="{users.first_name.first_cap}")
     public String getFirstName() {
         return firstName;
     }
@@ -24,7 +24,7 @@ public class User {
     }
 
     @NotNull
-    @FirstCapString
+    @FirstCapString(message="{users.last_name.first_cap}")
     public String getLastName() {
         return lastName;
     }

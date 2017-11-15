@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("users")
@@ -22,8 +23,8 @@ public class UsersResource {
     }
 
     @POST
-    public User addUser(@Valid User user) {
+    public Response addUser(@Valid User user) {
         usersStorage.addUser(user);
-        return user;
+        return Response.status(Response.Status.CREATED).entity(user).build();
     }
 }
