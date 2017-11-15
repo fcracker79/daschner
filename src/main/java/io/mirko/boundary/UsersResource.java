@@ -13,16 +13,16 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class UsersResource {
     @Inject
-    UsersRepository usersRepository;
+    UsersStorage usersStorage;
 
     @GET
     public List<User> getUsers() {
-        return usersRepository.getAll();
+        return usersStorage.getAllUsers();
     }
 
     @POST
     public User addUser(User user) {
-        usersRepository.addUser(user);
+        usersStorage.addUser(user);
         return user;
     }
 }
