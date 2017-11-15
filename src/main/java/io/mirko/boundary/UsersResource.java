@@ -4,6 +4,7 @@ import io.mirko.entity.User;
 import io.mirko.entity.UsersRepository;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -21,7 +22,7 @@ public class UsersResource {
     }
 
     @POST
-    public User addUser(User user) {
+    public User addUser(@Valid User user) {
         usersStorage.addUser(user);
         return user;
     }

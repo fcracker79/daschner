@@ -6,7 +6,7 @@ public class User {
     private String firstName;
     private String lastName;
 
-    public User(String firstName, String lastName) {
+    public User(@NotNull @FirstCapString String firstName, @NotNull @FirstCapString String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -14,6 +14,7 @@ public class User {
     public User() {}
 
     @NotNull
+    @FirstCapString
     public String getFirstName() {
         return firstName;
     }
@@ -23,6 +24,7 @@ public class User {
     }
 
     @NotNull
+    @FirstCapString
     public String getLastName() {
         return lastName;
     }
