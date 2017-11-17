@@ -1,8 +1,9 @@
 package io.mirko.entity;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable {
     private String firstName;
     private String lastName;
 
