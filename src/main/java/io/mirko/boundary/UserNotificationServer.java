@@ -26,12 +26,12 @@ public class UserNotificationServer {
 
     @OnMessage
     public void onMessage(String message, Session session) {
-        logger.info(String.format("Received message %s", message));
+        logger.info(String.format("Received String message %s", message));
     }
 
     @OnMessage
     public void onMessage(UserNotificationMessage message, Session session) {
-        logger.info(String.format("Received message %s", message.toString()));
+        logger.info(String.format("Received Object message %s", message.toString()));
     }
 
     @OnClose
@@ -46,7 +46,6 @@ public class UserNotificationServer {
         for (Session s: sessions.values()) {
             logger.info(String.format("Sending message to session %s", s));
             try {
-                s.getBasicRemote().sendObject("hello_world".getBytes());
                 s.getBasicRemote().sendObject(new UserNotificationMessage(userCreated.getUser()));
             } catch (EncodeException | IOException e) {
                 throw new RuntimeException(e);
