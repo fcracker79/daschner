@@ -25,9 +25,19 @@ public class UsersStorage {
         return usersRepository.getAll();
     }
 
+    @Lock(LockType.READ)
+    public User getUser(long id) {
+        return usersRepository.getUser(id);
+    }
+
+    @Lock(LockType.WRITE)
+    public User updateUser(long id, User user) {
+        return usersRepository.updateUser(id, user);
+    }
     @Lock
-    public void addUser(User user) {
-        usersRepository.addUser(user);
+    public Long addUser(User user) {
+        final Long id = usersRepository.addUser(user);
         userCreated.fire(new UserCreated(user));
+        return id;
     }
 }

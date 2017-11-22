@@ -1,25 +1,37 @@
 package io.mirko.entity;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @ApplicationScoped
 public class UsersRepositoryImpl implements UsersRepository {
-    private final List<User> allUsers = new ArrayList<>();
+    @PersistenceContext(unitName="DaschnerPersistenceUnit")
+    EntityManager entityManager;
 
-    public UsersRepositoryImpl() {
-        allUsers.add(new User("John3", "Burns"));
-        allUsers.add(new User("David", "Mills"));
+    public User getUser(long id) {
+        return entityManager.find(User.class, id);
+    }
+
+    public User updateUser(long id, User user) {
+        User existingUser = entityManager.find(User.class, id);
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        entityManager.flush();
+        return existingUser;
     }
 
     public List<User> getAll() {
-        return Collections.unmodifiableList(this.allUsers);
+        return entityManager.createQuery("Select t from " + User.class.getSimpleName() + " t").getResultList();
     }
 
-    public void addUser(User user) {
-        this.allUsers.add(user);
+    public Long addUser(User user) {
+        entityManager.persist(user);
+        entityManager.flush();
+        return user.getId();
     }
 
 }

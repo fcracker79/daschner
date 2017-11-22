@@ -1,10 +1,28 @@
 package io.mirko.entity;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+@Entity
+@Table(name="users")
 public class User implements Serializable {
+    @Id
+    @SequenceGenerator(
+            name="users_id_seq",
+            sequenceName="users_id_seq",
+            allocationSize=1)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator="users_id_seq")
+    private Long id;
+
+    @Basic(optional = false)
+    @Column(name="first_name")
     private String firstName;
+
+    @Basic(optional = false)
+    @Column(name="last_name")
     private String lastName;
 
     public User(@NotNull @FirstCapString String firstName, @NotNull @FirstCapString String lastName) {
@@ -13,6 +31,14 @@ public class User implements Serializable {
     }
 
     public User() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @NotNull
     @FirstCapString(message="{users.first_name.first_cap}")
