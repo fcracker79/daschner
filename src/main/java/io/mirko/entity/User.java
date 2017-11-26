@@ -1,7 +1,9 @@
 package io.mirko.entity;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
@@ -25,6 +27,24 @@ public class User implements Serializable {
     @Column(name="last_name")
     private String lastName;
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    @Embedded
+    // This is shit. It does not seem to be possible to have all-or-nothing.
+    @AttributeOverrides({
+            @AttributeOverride(name="street", column=@Column(nullable=true)),
+            @AttributeOverride(name="city", column=@Column(nullable=true)),
+            @AttributeOverride(name="country", column=@Column(nullable=true))
+    })
+    private Address address;
+
+
     public User(@NotNull @FirstCapString String firstName, @NotNull @FirstCapString String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,6 +52,7 @@ public class User implements Serializable {
 
     public User() {}
 
+    @JsonbTransient
     public Long getId() {
         return id;
     }
@@ -42,6 +63,7 @@ public class User implements Serializable {
 
     @NotNull
     @FirstCapString(message="{users.first_name.first_cap}")
+    @Size(max=64)
     public String getFirstName() {
         return firstName;
     }
@@ -52,6 +74,7 @@ public class User implements Serializable {
 
     @NotNull
     @FirstCapString(message="{users.last_name.first_cap}")
+    @Size(max=64)
     public String getLastName() {
         return lastName;
     }
@@ -60,15 +83,20 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof User)) return false;
 
         User user = (User) o;
 
-        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
-        return lastName != null ? lastName.equals(user.lastName) : user.lastName == null;
+        if (getId() != null ? !getId().equals(user.getId()) : user.getId() != null) return false;
+        if (getFirstName() != null ? !getFirstName().equals(user.getFirstName()) : user.getFirstName() != null)
+            return false;
+        if (getLastName() != null ? !getLastName().equals(user.getLastName()) : user.getLastName() != null)
+            return false;
+        return getAddress() != null ? getAddress().equals(user.getAddress()) : user.getAddress() == null;
     }
 
     @Override
