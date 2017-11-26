@@ -1,6 +1,7 @@
 package io.mirko.entity;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
@@ -9,7 +10,8 @@ import java.util.List;
 
 @ApplicationScoped
 public class UsersRepositoryImpl implements UsersRepository {
-    @PersistenceContext(unitName="DaschnerPersistenceUnit")
+    @Inject
+    @UsersEntityManager
     EntityManager entityManager;
 
     public User getUser(long id) {
