@@ -37,7 +37,7 @@ public class UsersStorage {
     @Lock
     public Long addUser(User user) {
         final Long id = usersRepository.addUser(user);
-        userCreated.fire(new UserCreated(user));
+        userCreated.fireAsync(new UserCreated(user));
         return id;
     }
 }

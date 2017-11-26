@@ -1,18 +1,16 @@
 package io.mirko.entity;
 
+import javax.json.bind.annotation.JsonbTypeDeserializer;
+import javax.json.bind.annotation.JsonbTypeSerializer;
+
+
+@JsonbTypeSerializer(CountrySerializer.class)
+@JsonbTypeDeserializer(CountryDeserializer.class)
 public enum Country {
-    ITALY ("IT"),
-    UNITED_STATES ("US"),
-    UNITED_KINGDOM ("UK"),
-    FRANCE ("FR"),
-    GERMANY ("DE");
+    IT,
+    US,
+    UK,
+    FR,
+    DE;
 
-    private final String strCountry;
-    Country(String strCountry) {
-        this.strCountry = strCountry;
-    }
-
-    public String toString() {
-        return this.strCountry;
-    }
 }

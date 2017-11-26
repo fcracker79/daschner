@@ -44,4 +44,13 @@ public class Address implements Serializable {
     public void setCountry(Country country) {
         this.country = country;
     }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", country=" + country +
+                '}';
+    }
 }
