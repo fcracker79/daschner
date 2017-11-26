@@ -1,5 +1,6 @@
 package io.mirko.boundary;
 
+import io.mirko.control.Tracked;
 import io.mirko.entity.User;
 import io.mirko.entity.UsersRepository;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @Path("users")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Tracked
 public class UsersResource {
     @Inject
     UsersStorage usersStorage;
